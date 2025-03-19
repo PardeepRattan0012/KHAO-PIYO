@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khao Piyo - Food & Beverages</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f8f8;
+        }
+        
+        header {
+            background-color: #e4002b;
+            color: white;
+            padding: 10px 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+       
+        .fixed-image-left {  
+            position: fixed;   
+            top: 0;         
+            left: 0;         
+            width: 100px;     
+            height: auto;    
+        }  
+        
+        .fixed-image-right {  
+            position: fixed;  
+            top: 0;         
+            right: 0;        
+            width: 100px;    
+            height: auto;   
+        }  
+        
+        .right-image {
+            float: right; 
+            width: 200px; 
+            height: 200px; 
+        }
+        
+        .container {
+            width: 90%;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            text-align: center;
+            font-size: 45px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .hero {
+            background-image: url('/api/placeholder/1200/500');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #e4002b;
+            color: white;
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #c6001e;
+        }
+        
+        section {
+            padding: 60px 0;
+        }
+        
+        h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #e4002b;
+        }
+        
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .store-item {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .store-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .store-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .store-item-content {
+            padding: 20px;
+        }
+        
+        .store-item h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .store-item p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .store-address {
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        .order-history {
+            margin-top: 20px;
+            border-top: 1px dashed #ccc;
+            padding-top: 15px;
+        }
+        
+        .order-history h4 {
+            margin-bottom: 10px;
+            color: #e4002b;
+        }
+        
+        .order-history ul {
+            list-style: none;
+        }
+        
+        .order-history ul li {
+            margin-bottom: 5px;
+            color: #666;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .order-history ul li:before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #e4002b;
+        }
+        
+        .visit-date {
+            font-size: 14px;
+            color: #999;
+            display: block;
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .menu-item {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .menu-item-content {
+            padding: 20px;
+        }
+        
+        .menu-item h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .menu-item p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #e4002b;
+            display: block;
+            margin-bottom: 15px;
+        }
+        
+        .order-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .order-option {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .order-option h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .location {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .location img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .location-content {
+            padding: 20px;
+        }
+        
+        .location h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .location p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .about-image img {
+            width: 100%;
+            display: block;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .about-text p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #e4002b;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #555;
+            color: #ccc;
+        }
+        
+        /* Tabs for pages */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">KHAO PIYO</h1>
+            
+            <img src="E:\khao piyo\logo23.png" alt="Khao Piyo Logo" class="fixed-image-left">  
+            <img src="E:\khao piyo\logo23.png" alt="Khao Piyo Logo" class="fixed-image-right"> 
+            
+            <nav>
+                <ul>
+                    <li><a href="#" class="active nav-link" data-target="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-target="menu">Menu</a></li>
+                    <li><a href="#" class="nav-link" data-target="order">Order & Dining</a></li>
+                    <li><a href="#" class="nav-link" data-target="locations">Locations</a></li>
+                    <li><a href="#" class="nav-link" data-target="about">About Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Home Page -->
+    <main id="home" class="tab-content active">
+        <section class="hero">
+            <div class="container hero-content">
+                <h2>Finger Lickin' Good</h2>
+                <p>Experience the legendary taste of secret recipes</p>
+                <a href="#" class="btn nav-link" data-target="order">Order Now</a>
+            </div>
+        </section>
+        
+        <section class="featured-locations">
+            <div class="container">
+                <h2>Your Favorite KHAO PIYO Locations</h2>
+                <div class="store-grid">
+                    <article class="store-item">
+                        <img src="E:\khao piyo\oven.webp" alt="LPU Oven Express Location">
+                        <div class="store-item-content">
+                            <h3>LPU Oven Express</h3>
+                            <address class="store-address">Front LPU Food Court</address>
+                            <p>Your most frequently visited Khao Piyo location!</p>
+                            <div class="order-history">
+                                <h4>Your Recent Orders:</h4>
+                                <ul>
+                                    <li>Original Recipe Bucket + Coleslaw <time class="visit-date" datetime="2025-02-28">Feb 28, 2025</time></li>
+                                    <li>Zinger Burger Combo <time class="visit-date" datetime="2025-02-15">Feb 15, 2025</time></li>
+                                    <li>Family Feast <time class="visit-date" datetime="2025-01-22">Jan 22, 2025</time></li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn">Order Again</a>
+                        </div>
+                    </article>
+                    <article class="store-item">
+                        <img src="E:\khao piyo\buzz.jpeg" alt="BUZZ Location">
+                        <div class="store-item-content">
+                            <h3>BUZZ</h3>
+                            <address class="store-address">Near Apartment, LPU</address>
+                            <p>One of your favorite weekend spots!</p>
+                            <div class="order-history">
+                                <h4>Your Recent Orders:</h4>
+                                <ul>
+                                    <li>Hot & Spicy gravy + Fries <time class="visit-date" datetime="2025-03-02">Mar 2, 2025</time></li>
+                                    <li>Double Down Combo <time class="visit-date" datetime="2025-01-31">Jan 31, 2025</time></li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn">Order Again</a>
+                        </div>
+                    </article>
+                    <article class="store-item">
+                        <img src="E:\khao piyo\kitchenitte.jpg" alt="Kitchen Itte Location">
+                        <div class="store-item-content">
+                            <h3>Kitchen Itte</h3>
+                            <address class="store-address">Near Apartment, LPU</address>
+                            <p>Perfect for thalli's!</p>
+                            <div class="order-history">
+                                <h4>Your Recent Orders:</h4>
+                                <ul>
+                                    <li>Zinger Tower Meal <time class="visit-date" datetime="2025-02-20">Feb 20, 2025</time></li>
+                                    <li>3pc Strips + Mashed Potatoes <time class="visit-date" datetime="2025-01-15">Jan 15, 2025</time></li>
+                                    <li>Popcorn Box <time class="visit-date" datetime="2024-12-28">Dec 28, 2024</time></li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn">Order Again</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Menu Page -->
+    <main id="menu" class="tab-content">
+        <section class="menu-section">
+            <div class="container">
+                <h2>Our Menu</h2>
+                
+                <section class="menu-category">
+                    <h3>Drinks</h3>
+                    <div class="menu-grid">
+                        <article class="menu-item">
+                            <img src="E:\khao piyo\WhatsApp Image 2025-03-11 at 3.59.40 PM.jpeg" alt="Mojito">
+                            <div class="menu-item-content">
+                                <h4>MOJITO</h4>
+                                <p>Our classic drink of lemon Soda</p>
+                                <span class="price">₹100.99</span>
+                                <a href="#" class="btn">Add to Cart</a>
+                            </div>
+                        </article>
+                        <article class="menu-item">
+                            <img src="E:\khao piyo\milk.jpeg" alt="Shakes">
+                            <div class="menu-item-content">
+                                <h4>Shakes</h4>
+                                <p>Extra creamy shakes of different flavour.</p>
+                                <span class="price">₹21.99</span>
+                                <a href="#" class="btn">Add to Cart</a>
+                            </div>
+                        </article>
+                        <article class="menu-item">
+                            <img src="E:\khao piyo\tea2.jpeg" alt="Chai">
+                            <div class="menu-item-content">
+                                <h4>Chai</h4>
+                                <p>Different types of chai with herbal ingredients.</p>
+                                <span class="price">₹39.99</span>
+                                <a href="#" class="btn">Add to Cart</a>
+                            </div>
+                        </article>
+                        <article class="menu-item">
+                            <img src="E:\khao piyo\tea.jpeg" alt="Coffee">
+                            <div class="menu-item-content">
+                                <h4>Coffee</h4>
+                                <p>Enjoy different types of Coffee like cold, hot etc.</p>
+                                <span class="price">₹50</span>
+                                <a href="#" class="btn">Add to Cart</a>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+                
+                <section class="menu-category">
+                    <h3>Burgers & Sandwiches</h3>
+                    <div class="menu-grid">
+                        <article class="menu-item">
+                            <img src="E:\khao piyo\burg1.jpeg" alt="Zinger Burger">
+                            <div class="menu-item-content">
+                                <h4>Zinger Burger</h4>
+                                <p>Spicy, crispy fillet with lettuce and special sauce.</p>
+                                <span class="price">₹40.99</span>
+                                <a href="#" class="btn">Add to Cart</a>
+                            </div>
+                        </article>
+                        <article class="menu-item">
+                            <img src="E:\khao piyo\burg2.jpeg" alt="Double Down">
+                            <div class="menu-item-content">
+                                <h4>Double Down</h4>
+                                <p>Bacon, sauce and cheese between fillets.</p>
+                                <span class="price">₹100.99</span>
+                                <a href="#" class="btn">Add to Cart</a>
+                            </div>
+                        </article>
+                        <article class="menu-item">
+                            <img src="E:\khao piyo\burg3.jpeg" alt="Tower Burger">
+                            <div class="menu-item-content">
+                                <h4>Tower Burger</h4>
+                                <p>Zinger fillet with hash brown, cheese, lettuce and tomato.</p>
+                                <span class="price">₹150.99</span>
+                                <a href="#" class="btn">Add to Cart</a>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+                
+                <section class="menu-category">
+                    <h3>Sides & Snacks</h3>
+                    <div class="menu-grid">
+                        <article class="menu-item">
+                            <img src="E:\khao piyo\mash.jpeg" alt="Mashed Potatoes">
+                            <div class="menu-item-content">
+                                <h4>Mashed Potatoes</h4>
+                                <p>Creamy mashed potatoes with our signature gravy.</p>
+                                <span class="price">₹30.99</span>
+                                <a href="#" class="btn">Add to Cart</a>
+                            </div>
+                        </article>
+                        <article class="menu-item">
+                            <img src="E:\khao piyo\cole.jpeg" alt="Coleslaw">
+                            <div class="menu-item-content">
+                                <h4>Coleslaw</h4>
+                                <p>Fresh, crispy, and creamy classic coleslaw.</p>
+                                <span class="price">₹320.49</span>
+                                <a href="#" class="btn">Add to Cart</a>
+                            </div>
+                        </article>
+                        <article class="menu-item">
+                            <img src="E:\khao piyo\fries.jpeg" alt="Fries">
+                            <div class="menu-item-content">
+                                <h4>Fries</h4>
+                                <p>Golden, crispy French fries.</p>
+                                <span class="price">₹220.99</span>
+                                <a href="#" class="btn">Add to Cart</a>
+                            </div>
+                        </article>
+                        <article class="menu-item">
+                            <img src="E:\khao piyo\cob.jpeg" alt="Corn on the Cob">
+                            <div class="menu-item-content">
+                                <h4>Corn on the Cob</h4>
+                                <p>Sweet corn, buttered to perfection.</p>
+                                <span class="price">₹223.29</span>
+                                <a href="#" class="btn">Add to Cart</a>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Order & Dining Page -->
+    <main id="order" class="tab-content">
+        <section class="order-section">
+            <div class="container">
+                <h2>Order & Dining Options</h2>
+                <div class="order-options">
+                    <article class="order-option">
+                        <h3>Delivery</h3>
+                        <p>Get KHAO PIYO delivered right to your doorstep. Fast, reliable, and hot!</p>
+                        <p>Minimum order: ₹15</p>
+                        <p>Delivery time: 30-45 minutes</p>
+                        <a href="#" class="btn">Order Delivery</a>
+                    </article>
+                    <article class="order-option">
+                        <h3>Pick-Up</h3>
+                        <p>Order ahead and pick up your food without waiting in line.</p>
+                        <p>Pick-up time: 15-20 minutes</p>
+                        <a href="#location" class="btn">Order Pick-Up</a>
+                    </article>
+                    <article class="order-option">
+                        <h3>Dine-In</h3>
+                        <p>Enjoy the KHAO PIYO experience inside our restaurants.</p>
+                        <p>Available at all locations during operating hours.</p>
+                        <a href="#" class="btn">Find a shop</a>
+                    </article>
+                </div>
+                
+                <section class="special-deals">
+                    <h3>Special Deals</h3>
+                    <div class="menu-grid">
+                        <article class="menu-item">
+                            <img src="E:\khao piyo\combo1.jpeg" alt="Family Deal">
+                            <div class="menu-item-content">
+                                <h4>Family Deal</h4>
+                                <p>16 pieces of Burgers, 4 large sides, and 8 biscuits.</p>
+                                <span class="price">₹440.99</span>
+                                <a href="#" class="btn">Order Now</a>
+                            </div>
+                        </article>
+                        <article class="menu-item">
+                            <img src="E:\khao piyo\combo2.jpeg" alt="Lunch Special">
+                            <div class="menu-item-content">
+                                <h4>Lunch Special</h4>
+                                <p>2 pieces of Burger, 1 side, and a drink.</p>
+                                <span class="price">₹300.99</span>
+                                <a href="#" class="btn">Order Now</a>
+                            </div>
+                        </article>
+                        <article class="menu-item">
+                            <img src="E:\khao piyo\combo3.jpeg" alt="Game Day Bundle">
+                            <div class="menu-item-content">
+                                <h4>Game Day Bundle</h4>
+                                <p>20 Hot Wings, 8 pieces of Burgers, and 2 large sides.</p>
+                                <span class="price">₹350.99</span>
+                                <a href="#" class="btn">Order Now</a>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Locations Page -->
+    <main id="locations" class="tab-content">
+        <section class="locations-section">
+            <div class="container">
+                <h2>Our Locations</h2>
+                <div class="locations-grid">
+                    <article class="location">
+                        <img src="E:\khao piyo\lpu.jpg" alt="LPU Food Court">
+                        <div class="location-content">
+                            <h3>LPU Food Court</h3>
+                            <address>123 Main Street, City Center</address>
+                            <p>Phone: <a href="tel:123123-4567">123123-4567</a></p>
+                            <p>Hours: <time datetime="10:00">10 AM</time> - <time datetime="23:00">11 PM</time> Daily</p>
+                            <a href="#" class="btn">Get Directions</a>
+                        </div>
+                    </article>
+                    <article class="location">
+                        <img src="E:\khao piyo\chau.avif" alt="Jalandhar Cantt Chaupati">
+                        <div class="location-content">
+                            <h3>Jalandhar Cantt Chaupati</h3>
+                            <address>Jalandhar Cantt, near Lovely Sweets</address>
+                            <p>Phone: <a href="tel:2345234-5678">2345234-5678</a></p>
+                            <p>Hours: <time datetime="10:00">10 AM</time> - <time datetime="24:00">12 AM</time> Daily</p>
+                            <a href="#" class="btn">Get Directions</a>
+                        </div>
+                    </article>
+                    <article class="location">
+                        <img src="E:\khao piyo\eastwood.jpg" alt="Eastwood Village">
+                        <div class="location-content">
+                            <h3>Eastwood Village</h3>
+                            <address>Jalandhar - Phagwara Highway</address>
+                            <p>Phone: <a href="tel:555345-6789">555345-6789</a></p>
+                            <p>Hours: <time datetime="10:00">10 AM</time> - <time datetime="22:00">10 PM</time> Daily</p>
+                            <a href="#" class="btn">Get Directions</a>
+                        </div>
+                    </article>
+                    <article class="location">
+                        <img src="E:\khao piyo\kitchenitte.jpg" alt="Kitchen Itte">
+                        <div class="location-content">
+                            <h3>Kitchen Itte</h3>
+                            <address>LPU Food Court, Near Apartment</address>
+                            <p>Phone: <a href="tel:102456-7890">102456-7890</a></p>
+                            <p>Hours: <time datetime="10:00">10 AM</time> - <time datetime="23:00">11 PM</time> Daily</p>
+                            <a href="#" class="btn">Get Directions</a>
+                        </div>
+                    </article>
+                    <article class="location">
+                        <img src="E:\khao piyo\oven.webp" alt="Oven Express">
+                        <div class="location-content">
+                            <h3>Oven Express</h3>
+                            <address>LPU Food Court, Near Front Gate</address>
+                            <p>Phone: <a href="tel:555567-8901">555567-8901</a></p>
+                            <p>Hours: <time datetime="10:00">10 AM</time> - <time datetime="22:00">10 PM</time> Daily</p>
+                            <a href="#" class="btn">Get Directions</a>
+                        </div>
+                    </article>
+                    <article class="location">
+                        <img src="E:\khao piyo\bee.webp" alt="Bee Burg">
+                        <div class="location-content">
+                            <h3>Bee Burg</h3>
+                            <address>Rama Mandi, Near Green Valley</address>
+                            <p>Phone: <a href="tel:555678-9012">555678-9012</a></p>
+                            <p>Hours: <time datetime="09:00">9 AM</time> - <time datetime="21:00">9 PM</time> Daily</p>
+                            <a href="#" class="btn">Get Directions</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+   <main id="about" class="tab-content">
+        <section>
+            <div class="container">
+                <h2>About KHAO PIYO</h2>
+                <div class="about-content">
+                    <div class="about-image">
+                        <img src="E:\khao piyo\logo.jpeg" alt="About Khao Piyo">
+                    </div>
+                    <div class="about-text">
+                        <h3>Our Story</h3>
+                        <p>KHAO PIYO was founded by two students of LPU (PARDEEP RATTAN, ISHAN ARORA), an entrepreneur who began selling food from his roadside restaurant in LPU and Jalandhar, during the Great Depression.</p>
+                        <p>The idea of this website is inspired by our real-life incidents. KHAO PIYO popularized in the fast-food industry, diversifying the market by challenging the established dominance of the hamburger.</p>
+                    </div>
+                </div>
+                
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Our Mission</h3>
+                        <p>At KHAO PIYO, our mission is to spread the joy of our world-famous foods to food lovers everywhere. We strive to:</p>
+                        <ul>
+                            <li>Serve high-quality, great-tasting food at affordable prices</li>
+                            <li>Provide exceptional customer service in a clean, welcoming environment</li>
+                            <li>Be a positive force in our communities through job creation and community involvement</li>
+                        </ul>
+                    </div>
+                    <div class="about-image">
+                        <img src="E:\khao piyo\ab2.jpeg" alt="Mission">
+                    </div>
+                </div>
+                
+                <div class="about-content">
+                    <div class="about-image">
+                        <img src="E:\khao piyo\ab3.jpeg" alt="Quality">
+                    </div>
+                    <div class="about-text">
+                        <h3>Our Commitment to Quality</h3>
+                        <p>Every KHAO PIYO meal is prepared with real items, raised by trusted farmers who follow our strict quality and welfare standards. Our food is freshly prepared in-store by trained cooks.</p>
+                        <p>We're proud to say that we still follow hygiene and the best practices for pure items for our food.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About</h3>
+                    <ul>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Franchising</a></li>
+                        <li><a href="#">Investors</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Feedback</a></li>
+                        <li><a href="#">Nutrition Facts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                        <li><a href="#">Cookies Notice</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="https://www.instagram.com/punjab_writes26/">Instagram</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 KHAO PIYO. This is a demo website.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.nav-link');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    document.querySelectorAll('.nav-link').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    
+                    const targetId = this.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                    
+                    window.scrollTo(0, 0);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
